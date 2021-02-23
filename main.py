@@ -37,7 +37,7 @@ for i in range(8):
     lcd.putchar(chr(i))
 utime.sleep(3)
 lcd.clear()
-lcd.putstr("It Works!\nSecond Line\nThird\n")
+lcd.putstr("It Works!\nSecond Line\nThird Line is Here.\n")
 
 while True:
 
@@ -56,7 +56,11 @@ while True:
     packet = xbee.receive()
     if packet != None:
         message = packet["payload"].decode("utf8")
-        lcd.move_to(0,2)
+        line = int(message[0:1])
+        message = message[1:]
+        while len(message) < 20:
+            message = message + " "
+        lcd.move_to(0,line)
         lcd.putstr(message)
 
     lcd.move_to(0,3)
