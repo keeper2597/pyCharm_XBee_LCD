@@ -120,16 +120,3 @@ class I2cLcd(LcdApi):
                 ((data & 0x0f) << SHIFT_DATA))
         self.i2c.writeto_mem(self.i2c_addr, GPIO, bytearray([byte | MASK_E]))
         self.i2c.writeto_mem(self.i2c_addr, GPIO, bytearray([byte]))
-
-    # def hal_write_data(self, data):
-    #     """Write data to the LCD."""
-    #     byte = (MASK_RS |
-    #             (self.backlight << SHIFT_BACKLIGHT) |
-    #             (((data >> 4) & 0x0f) << SHIFT_DATA))
-    #     self.bus.write_byte(self.i2c_addr, byte | MASK_E)
-    #     self.bus.write_byte(self.i2c_addr, byte)
-    #     byte = (MASK_RS |
-    #             (self.backlight << SHIFT_BACKLIGHT) |
-    #             ((data & 0x0f) << SHIFT_DATA))
-    #     self.bus.write_byte(self.i2c_addr, byte | MASK_E)
-    #     self.bus.write_byte(self.i2c_addr, byte)

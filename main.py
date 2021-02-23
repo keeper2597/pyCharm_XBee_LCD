@@ -4,7 +4,11 @@
 from machine import I2C, Pin
 import utime
 from xbee_i2c_adafruit_lcd import I2cLcd
+import xbee
+xbee.receive_callback(None)
+#from sys import stdin
 
+incomingMessage = ""
 
 DEFAULT_I2C_ADDR = 0x27
 
@@ -34,8 +38,26 @@ for i in range(8):
 utime.sleep(3)
 lcd.clear()
 lcd.putstr("It Works!\nSecond Line\nThird\n")
+
 while True:
 
+    # bufferRead = stdin.buffer.read(-1)
+    # if bufferRead != None:
+    #     print(bufferRead)
+    #     incomingMessage = bufferRead
+    #     lcd.move_to(0,2)
+    #     lcd.putstr(incomingMessage)
+    #     if bufferRead == "\n":
+    #         lcd.move_to(0,2)
+    #         lcd.putstr(incomingMessage)
+    #         incomingMessage = ""
+    #     else:
+    #         incomingMessage += bufferRead
+    packet = xbee.receive()
+    if packet != None:
+        message = packet["payload"].decode("utf8")
+        lcd.move_to(0,2)
+        lcd.putstr(message)
 
     lcd.move_to(0,3)
     lcd.putstr("%4d" % (utime.ticks_ms() // 1000))
